@@ -6,5 +6,5 @@
 // process.
 var fs = require('fs');
 
-var js = fs.readFileSync("./config.json");
+var js = fs.readFileSync('./config.json');
 var evmnetworks = JSON.parse(js);

@@ -283,7 +283,7 @@
   const electron = require('electron');
   const { ipcRenderer } = electron;
 
-  function init() {
+  function init () {
     document.querySelector("#rpc").checked = true;
   }
   init();
@@ -291,7 +291,7 @@
   var nownetwork = 'eth';
   var chainid = 1;
   //初始化web3
-  function initweb3() {
+  function initweb3 () {
     var webtype = "rpc";
     const wschecked = document.querySelector('#ws').checked
     if (wschecked) {
@@ -305,7 +305,7 @@
   }
 
   //查询智能合约功能
-  function queryContarct() {
+  function queryContarct () {
     const contractaddress = document.querySelector('#Contractaddress').value;
     evmnetwork = getNetworkInfo(nownetwork);
     if (evmnetwork[0]) {
@@ -318,7 +318,7 @@
 
 
   //抢购开始函数
-  function qianggou() {
+  function qianggou () {
     const nftaddress = document.querySelector('#nftaddress').value;
     const inputdata = document.querySelector('#inputdata').value;
     const gas = document.querySelector('#qianggougas').value;
@@ -329,13 +329,13 @@
     ipcRenderer.send('info:qianggou', value)
   }
 
-  function ceshi() {
+  function ceshi () {
 
 
     ipcRenderer.send('info:test', {})
   }
 
-  function init1() {
+  function init1 () {
 
 
     var network = document.querySelector('#network');
@@ -364,12 +364,12 @@
 
   }
 
-  function changewebnetwork(webtype) {
+  function changewebnetwork (webtype) {
     //alert(webtype);
     changenetwork(nownetwork);
   }
 
-  function changenetwork(network) {
+  function changenetwork (network) {
     var result = getNetworkInfo(network);
     if (result[0]) {
       nownetwork = result[1].network;
@@ -390,7 +390,7 @@
 
   }
 
-  function getNetworkInfo(network) {
+  function getNetworkInfo (network) {
     for (evmnetwork of evmnetworks) {
       //console.log(evmnetwork);
       if (network == evmnetwork.network) {
@@ -428,7 +428,7 @@
     }
   });
 
-  function cleanchild(selecthtml) {
+  function cleanchild (selecthtml) {
     while (true) {
       try {
         selecthtml.removeChild(selecthtml.childNodes[0]);
@@ -439,7 +439,7 @@
     }
   }
 
-  function readfunction(value) {
+  function readfunction (value) {
     //debugger;
     var selecthtml = document.querySelector('#fangfa');
     if (selecthtml != null) {
@@ -479,14 +479,14 @@
     });
   }
 
-  function changefunction(selecthtml) {
+  function changefunction (selecthtml) {
     //debugger;
     var option = selecthtml.options[selecthtml.selectedIndex];
     console.log(option.value)
     changefunctionEX(option.value, option.id);
   }
 
-  function transpara(input) {
+  function transpara (input) {
     type = input.name;
     value = input.value;
     id = input.id;
@@ -517,7 +517,7 @@
 
   }
 
-  function exce() {
+  function exce () {
     var paralist = document.querySelector('#paralist').getElementsByTagName("input")
     var okvalue = [];
     var tijiao = true;
@@ -546,7 +546,7 @@
   }
 
   var useabi = null;
-  function changefunctionEX(name, value) {
+  function changefunctionEX (name, value) {
 
     var viewmap = null;
     if (name == "view") {
@@ -608,7 +608,7 @@
   });
 
   // 检查代币是否授权，没有授权直接授权
-  function oncheckapprove() {
+  function oncheckapprove () {
     const tokenaddresscheck = document.querySelector('#tokenaddresscheck').value;
 
     const approveaddress = document.querySelector('#approveaddress').value;
@@ -619,7 +619,7 @@
     ipcRenderer.send('info:checkapprove', value)
   }
   //监控价格
-  function onstartmonitor() {
+  function onstartmonitor () {
     const lpaddress = document.querySelector('#lpaddress').value;
 
     const lptokenaddress = document.querySelector('#lptokenaddress').value;
@@ -629,12 +629,12 @@
     ipcRenderer.send('info:listenprice', value)
   }
 
-  function onstopmonitor() {
+  function onstopmonitor () {
     ipcRenderer.send('info:stoplistenprice', {})
   }
 
   //开始自动买入卖出
-  function onstartbuy() {
+  function onstartbuy () {
     var buyprice = document.querySelector('#buyprice').value;
     var buynumber = document.querySelector('#buynumber').value;
     var buylose = document.querySelector('#buylose').value;
@@ -645,16 +645,16 @@
     var buygas = document.querySelector('#buygas').value;
     var buygaslimit = document.querySelector('#buygaslimit').value;
     var pancakeaddress = document.querySelector('#approveaddress').value;
-    var buywbnb =  document.querySelector('#buywbnb').value;
-    var value = { buyprice, buynumber, buylose, sellprice, sellnumber, selllose, buygas, buygaslimit, pancakeaddress,buywbnb }
+    var buywbnb = document.querySelector('#buywbnb').value;
+    var value = { buyprice, buynumber, buylose, sellprice, sellnumber, selllose, buygas, buygaslimit, pancakeaddress, buywbnb }
     ipcRenderer.send('info:startbuy', value)
   }
 
-  function onstopbuy() {
+  function onstopbuy () {
     ipcRenderer.send('info:stopbuy', {})
   }
 
-  function getnowtime() {
+  function getnowtime () {
     dt = new Date();
 
     var y = dt.getFullYear();

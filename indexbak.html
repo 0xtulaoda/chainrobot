@@ -31,7 +31,7 @@
     <br>
     <input type="button" onclick="initweb3()" class="btn btn-add" value="初始化web3"> </input>
   </div>
- 
+
   <div style="width:500px;float:left ">
     <labe>授权检查：</labe>
     <label>代币合约地址：</label><input id="tokenaddresscheck" value="0xc778417E063141139Fce010982780140Aa0cD5Ab">
@@ -42,7 +42,7 @@
     <br>
     <label>gaslimint：</label><input id="approvegaslimit" value="420000">
     <br>
-    <button onclick="oncheckapprove()">批量检查授权pancake可以使用该代币</button> <button onclick ="ceshi()" >查询主币</button>
+    <button onclick="oncheckapprove()">批量检查授权pancake可以使用该代币</button> <button onclick="ceshi()">查询主币</button>
   </div>
 
   <div style="width:500px; ">
@@ -53,12 +53,12 @@
     <br>
     <label>交易对地址（U地址）：</label><input id="lptoken1address" value="0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d">
     <br>
-   
+
     <button onclick="onstartmonitor()">监控价格</button> <button onclick="onstopmonitor()">停止监控</button>
   </div>
 
   <div style="width:500px">
- 
+
     <label>设置买入价:</label><input id="buyprice" value="9.8">
     <br>
     <label>设置买入数量(代币):</label><input id="buynumber" value="100">
@@ -75,8 +75,8 @@
     <br>
     <label>设置买卖gas limit:</label><input id="buygaslimit" value="420000">
     <br>
-    <button onclick="onstartbuy()">开始自动买入卖出</button> 
-    <button onclick="onstopbuy()">停止自动买入卖出</button> 
+    <button onclick="onstartbuy()">开始自动买入卖出</button>
+    <button onclick="onstopbuy()">停止自动买入卖出</button>
   </div>
   <div id="log">
 
@@ -112,7 +112,7 @@
   const electron = require('electron');
   const { ipcRenderer } = electron;
 
-  function init() {
+  function init () {
     document.querySelector("#rpc").checked = true;
   }
   init();
@@ -120,7 +120,7 @@
   var nownetwork = 'eth';
   var chainid = 1;
   //初始化web3
-  function initweb3() {
+  function initweb3 () {
     var webtype = "rpc";
     const wschecked = document.querySelector('#ws').checked
     if (wschecked) {
@@ -134,7 +134,7 @@
   }
 
   //查询智能合约功能
-  function queryContarct() {
+  function queryContarct () {
     const contractaddress = document.querySelector('#Contractaddress').value;
     evmnetwork = getNetworkInfo(nownetwork);
     if (evmnetwork[0]) {
@@ -147,7 +147,7 @@
 
 
   //抢购开始函数
-  function qianggou() {
+  function qianggou () {
     const nftaddress = document.querySelector('#nftaddress').value;
     const inputdata = document.querySelector('#inputdata').value;
     const gas = document.querySelector('#qianggougas').value;
@@ -158,13 +158,13 @@
     ipcRenderer.send('info:qianggou', value)
   }
 
-  function ceshi() {
+  function ceshi () {
 
 
     ipcRenderer.send('info:test', {})
   }
 
-  function init1() {
+  function init1 () {
 
 
     var network = document.querySelector('#network');
@@ -192,12 +192,12 @@
 
   }
 
-  function changewebnetwork(webtype) {
+  function changewebnetwork (webtype) {
     //alert(webtype);
     changenetwork(nownetwork);
   }
 
-  function changenetwork(network) {
+  function changenetwork (network) {
     var result = getNetworkInfo(network);
     if (result[0]) {
       nownetwork = result[1].network;
@@ -218,7 +218,7 @@
 
   }
 
-  function getNetworkInfo(network) {
+  function getNetworkInfo (network) {
     for (evmnetwork of evmnetworks) {
       //console.log(evmnetwork);
       if (network == evmnetwork.network) {
@@ -243,7 +243,7 @@
     }
 
   });
-  
+
   var abi = null;
   ipcRenderer.on('info:queryabi', (e, value) => {
     console.log(value)
@@ -256,7 +256,7 @@
     }
   });
 
-  function cleanchild(selecthtml) {
+  function cleanchild (selecthtml) {
     while (true) {
       try {
         selecthtml.removeChild(selecthtml.childNodes[0]);
@@ -267,7 +267,7 @@
     }
   }
 
-  function readfunction(value) {
+  function readfunction (value) {
     //debugger;
     var selecthtml = document.querySelector('#fangfa');
     if (selecthtml != null) {
@@ -307,14 +307,14 @@
     });
   }
 
-  function changefunction(selecthtml) {
+  function changefunction (selecthtml) {
     //debugger;
     var option = selecthtml.options[selecthtml.selectedIndex];
     console.log(option.value)
     changefunctionEX(option.value, option.id);
   }
 
-  function transpara(input) {
+  function transpara (input) {
     type = input.name;
     value = input.value;
     id = input.id;
@@ -345,7 +345,7 @@
 
   }
 
-  function exce() {
+  function exce () {
     var paralist = document.querySelector('#paralist').getElementsByTagName("input")
     var okvalue = [];
     var tijiao = true;
@@ -374,7 +374,7 @@
   }
 
   var useabi = null;
-  function changefunctionEX(name, value) {
+  function changefunctionEX (name, value) {
 
     var viewmap = null;
     if (name == "view") {
@@ -427,46 +427,42 @@
   }
 
   ipcRenderer.on('info:msg', (e, value) => {
-  
-    
 
-    console.log( value)
+
+
+    console.log(value)
 
 
   });
 
   // 检查代币是否授权，没有授权直接授权
-  function oncheckapprove()
-  {
+  function oncheckapprove () {
     const tokenaddresscheck = document.querySelector('#tokenaddresscheck').value;
 
     const approveaddress = document.querySelector('#approveaddress').value;
     const approvegas = document.querySelector('#approvegas').value;
     const approvegaslimit = document.querySelector('#approvegaslimit').value;
 
-    value = { tokenaddresscheck, approveaddress,approvegas,approvegaslimit };
+    value = { tokenaddresscheck, approveaddress, approvegas, approvegaslimit };
     ipcRenderer.send('info:checkapprove', value)
   }
   //监控价格
-  function onstartmonitor()
-  {
+  function onstartmonitor () {
     const lpaddress = document.querySelector('#lpaddress').value;
 
     const lptokenaddress = document.querySelector('#lptokenaddress').value;
     const lptoken1address = document.querySelector('#lptoken1address').value;
-    
-    value = { lpaddress, lptokenaddress,lptoken1address };
+
+    value = { lpaddress, lptokenaddress, lptoken1address };
     ipcRenderer.send('info:listenprice', value)
   }
 
-  function onstopmonitor()
-  {
+  function onstopmonitor () {
     ipcRenderer.send('info:stoplistenprice', {})
   }
 
   //开始自动买入卖出
-  function onstartbuy()
-  {
+  function onstartbuy () {
     var buyprice = document.querySelector('#buyprice').value;
     var buynumber = document.querySelector('#buynumber').value;
     var buylose = document.querySelector('#buylose').value;
@@ -476,33 +472,31 @@
     var selllose = document.querySelector('#selllose').value;
     var buygas = document.querySelector('#buygas').value;
     var buygaslimit = document.querySelector('#buygaslimit').value;
-    var pancakeaddress = document.querySelector('#approveaddress').value; 
-    var value = {buyprice,buynumber,buylose,sellprice,sellnumber,selllose,buygas,buygaslimit,pancakeaddress}
+    var pancakeaddress = document.querySelector('#approveaddress').value;
+    var value = { buyprice, buynumber, buylose, sellprice, sellnumber, selllose, buygas, buygaslimit, pancakeaddress }
     ipcRenderer.send('info:startbuy', value)
   }
 
-  function onstopbuy()
-  {
+  function onstopbuy () {
     ipcRenderer.send('info:stopbuy', {})
   }
 
-  function getnowtime()
-  {
+  function getnowtime () {
     dt = new Date();
 
-var y = dt.getFullYear();
+    var y = dt.getFullYear();
 
-var mt = dt.getMonth() + 1;
+    var mt = dt.getMonth() + 1;
 
-var day = dt.getDate();
+    var day = dt.getDate();
 
-var h = dt.getHours(); //获取时
+    var h = dt.getHours(); //获取时
 
-var m = dt.getMinutes(); //获取分
+    var m = dt.getMinutes(); //获取分
 
-var s = dt.getSeconds(); //获取秒
+    var s = dt.getSeconds(); //获取秒
 
-var nowtimet = '当前时间：' + y + '年' + mt + '月' + day + '-' + h + '时' + m + '分' + s + '秒:';
+    var nowtimet = '当前时间：' + y + '年' + mt + '月' + day + '-' + h + '时' + m + '分' + s + '秒:';
     return nowtimet;
   }
   (function () {
@@ -510,7 +504,7 @@ var nowtimet = '当前时间：' + y + '年' + mt + '月' + day + '-' + h + '时
     var logger = document.getElementById('log');
     console.log = function (message) {
 
-      var nowtime =  (Date.now());
+      var nowtime = (Date.now());
 
       if (typeof message == 'object') {
 
